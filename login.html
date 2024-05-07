@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CueHub</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+        }
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+            font-size: 24px;
+            position: relative;
+        }
+        .logged-in {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            color: #4CAF50; /* Green color for indication */
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        form {
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        input[type="text"], input[type="password"], input[type="email"], button {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #333;
+            color: #fff;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #555;
+        }
+        .item-shop {
+            padding: 20px;
+        }
+        .item-shop.active {
+            display: block; /* Show item shop when active */
+        }
+        .redeem-code {
+            display: none; /* Hide redeem code section by default */
+            padding: 20px;
+        }
+        .redeem-code.active {
+            display: block; /* Show redeem code section when active */
+        }
+    </style>
+</head>
+<body>
+    <header>
+        CueHub <span class="logged-in" id="loggedInIndicator" style="display: none;">Logged In</span>
+    </header>
+    <div class="container">
+        <h2>Login</h2>
+        <form id="loginForm">
+            <input type="text" placeholder="Username" required>
+            <input type="password" placeholder="Password" required>
+            <div id="loginError" style="color: red; display: none;">Invalid Username Or Password. Please Try Again.</div>
+            <button type="submit">Login</button>
+        </form>
+    </div>
+
+    <script>
+        // Check if user is logged in
+        if(localStorage.getItem('loggedIn') === 'true') {
+            window.location.href = 'main.html'; // Redirect to main page
+        }
+
+        // Example of logging in
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            var username = document.getElementById('loginForm').elements["username"].value;
+            var password = document.getElementById('loginForm').elements["password"].value;
+
+            // Example: Retrieve user data from storage
+            var savedUsername = localStorage.getItem('username');
+            var savedPassword = localStorage.getItem('password');
+
+            // Example: Check if entered credentials match saved credentials
+            if (username === savedUsername && password === savedPassword) {
+                localStorage.setItem('loggedIn', true);
+                window.location.href = 'main.html'; // Redirect to main page
+            } else {
+                document.getElementById('loginError').style.display = 'block'; // Show the login error message
+            }
+        });
+    </script>
+</body>
+</html>
