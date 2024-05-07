@@ -108,9 +108,15 @@
 
     <script>
         // Check if user is logged in
-        if(localStorage.getItem('loggedIn') !== 'true') {
+        var loggedInUser = localStorage.getItem('username');
+        if(!loggedInUser) {
             // If not logged in, redirect to login page
             window.location.href = 'login.html';
+        } else {
+            // If logged in, display logged-in user's username and CueBucks balance
+            document.getElementById('loggedInIndicator').textContent = 'Logged In: ' + loggedInUser;
+            var cueBucks = localStorage.getItem('cueBucks') || 0;
+            document.getElementById('cueBucks').textContent = cueBucks;
         }
         
         // Codes object with codes and corresponding CueBucks amounts
@@ -133,6 +139,9 @@
                 // Remove the redeemed code from the codes object
                 delete codes[codeInput];
 
+                // Save updated CueBucks balance to localStorage
+                localStorage.setItem('cueBucks', cueBucks);
+
                 // Clear the input field
                 document.getElementById('codeInput').value = "";
             } else {
@@ -147,6 +156,10 @@
                 cueBucks -= price;
                 document.getElementById('cueBucks').textContent = cueBucks;
                 alert("Item purchased successfully!");
+
+                // Save updated CueBucks balance to localStorage
+                localStorage.setItem('cueBucks', cueBucks);
+
                 // Add logic to process the purchase here
             } else {
                 alert("Not enough CueBucks to buy this item.");
