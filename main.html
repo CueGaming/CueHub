@@ -35,6 +35,32 @@
         .item-shop {
             padding: 20px;
         }
+        .item-shop .item {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+        .item-shop .item h3 {
+            margin-top: 0;
+        }
+        .item-shop .item p {
+            margin-bottom: 10px;
+        }
+        .item-shop .item button {
+            background-color: #333;
+            color: #fff;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .item-shop .item button:hover {
+            background-color: #555;
+        }
+        .item-shop .item .not-enough {
+            color: red;
+        }
         .redeem-code {
             padding: 20px;
         }
@@ -53,17 +79,20 @@
             <div class="item">
                 <h3>Item 1</h3>
                 <p>Description of Item 1</p>
-                <button>Add to Cart</button>
+                <p>Price: 50 CueBucks</p>
+                <button onclick="buyItem(50)">Buy</button>
             </div>
             <div class="item">
                 <h3>Item 2</h3>
                 <p>Description of Item 2</p>
-                <button>Add to Cart</button>
+                <p>Price: 100 CueBucks</p>
+                <button onclick="buyItem(100)">Buy</button>
             </div>
             <div class="item">
                 <h3>Item 3</h3>
                 <p>Description of Item 3</p>
-                <button>Add to Cart</button>
+                <p>Price: 150 CueBucks</p>
+                <button onclick="buyItem(150)">Buy</button>
             </div>
         </div>
         <h2>Redeem Code</h2>
@@ -74,6 +103,7 @@
                 <button type="submit">Redeem</button>
             </form>
         </div>
+        <h2>Your CueBucks Balance: <span id="cueBucks">0</span></h2>
     </div>
 
     <script>
@@ -95,7 +125,22 @@
                 alert("Invalid code. Please try again."); // Example alert for invalid code
             }
         });
+
+        // Function to handle item purchase
+        function buyItem(price) {
+            var cueBucks = parseInt(document.getElementById('cueBucks').textContent);
+            if (cueBucks >= price) {
+                cueBucks -= price;
+                document.getElementById('cueBucks').textContent = cueBucks;
+                alert("Item purchased successfully!");
+                // Add logic to process the purchase here
+            } else {
+                alert("Not enough CueBucks to buy this item.");
+                // Optionally, you can display a message to the user indicating they don't have enough CueBucks
+                // For example:
+                // document.querySelector('.not-enough').textContent = "Not enough CueBucks";
+            }
+        }
     </script>
 </body>
 </html>
-
