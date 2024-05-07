@@ -66,6 +66,14 @@
         .redeem-code.active {
             display: block; /* Show redeem code section when active */
         }
+        .login-link {
+            color: blue;
+            text-decoration: underline;
+            cursor: pointer;
+            position: fixed;
+            bottom: 10px;
+            left: 10px;
+        }
     </style>
 </head>
 <body>
@@ -80,69 +88,50 @@
             <input type="password" placeholder="Password" required>
             <button type="submit">Sign Up</button>
         </form>
-        <h4><a href="#" id="loginLink">Go to Login</a></h4>
-        <h2>Login</h2>
-        <form id="loginForm" style="display: none;"> <!-- Hide login form by default -->
-            <input type="text" placeholder="Username" required>
-            <input type="password" placeholder="Password" required>
-            <div id="loginError" style="color: red; display: none;">Invalid Username Or Password. Please Try Again.</div>
-            <button type="submit">Login</button>
-        </form>
-        <h2>Item Shop</h2>
-        <div class="item-shop">
-            <button id="redeemCodeBtn">Redeem Code</button>
-        </div>
-        <h2>Redeem Code</h2>
-        <div class="redeem-code">
-            <form id="redeemCodeForm">
-                <input type="text" id="codeInput" placeholder="Enter Code" required>
-                <button type="submit">Redeem</button>
-            </form>
-        </div>
+        <a href="#" id="loginLink" class="login-link">Login</a>
     </div>
 
     <script>
-        // JavaScript to toggle visibility of sign-up and login forms
         document.getElementById('loginLink').addEventListener('click', function(e) {
-            e.preventDefault(); // Prevent default link behavior
+            e.preventDefault();
             document.getElementById('signupForm').style.display = 'none';
             document.getElementById('loginForm').style.display = 'block';
+            document.getElementById('loginError').style.display = 'none'; // Hide the login error message
         });
 
-        // Example of logging in
-        // This can be replaced with actual login logic
-        // For example, after successful login, you can set a variable to true and show the "Logged In" indicator
-        // For simplicity, I'm just showing the indicator immediately after clicking "Login"
-        document.getElementById('loginForm').addEventListener('submit', function(e) {
-            e.preventDefault(); // Prevent form submission for this example
-            // Example login logic
-            var username = document.getElementById('loginForm').elements["username"].value;
-            var password = document.getElementById('loginForm').elements["password"].value;
-            // For simplicity, let's say the correct credentials are "username" and "password"
-            if (username === "username" && password === "password") {
-                document.getElementById('loggedInIndicator').style.display = 'inline'; // Show the indicator
-                document.getElementById('loginError').style.display = 'none'; // Hide the login error message
-            } else {
-                document.getElementById('loginError').style.display = 'block'; // Show the login error message
+        // Check if user is logged in
+        if(localStorage.getItem('loggedIn') === 'true') {
+            document.getElementById('signupForm').style.display = 'none';
+            document.getElementById('loggedInIndicator').style.display = 'inline';
+        }
+
+        // Example of saving user data and setting logged-in state
+        document.getElementById('signupForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            var username = document.getElementById('signupForm').elements["username"].value;
+            var email = document.getElementById('signupForm').elements["email"].value;
+            var password = document.getElementById('signupForm').elements["password"].value;
+
+            // Example: Check if username or email is already used
+            var existingUsernames = ['user1', 'user2']; // Example list of existing usernames
+            var existingEmails = ['email1@example.com', 'email2@example.com']; // Example list of existing emails
+            if (existingUsernames.includes(username)) {
+                alert("Username already in use.");
+                return;
             }
-        });
-
-        // JavaScript to handle code redemption
-        document.getElementById('redeemCodeBtn').addEventListener('click', function() {
-            document.querySelector('.redeem-code').classList.add('active'); // Show redeem code section
-        });
-
-        document.getElementById('redeemCodeForm').addEventListener('submit', function(e) {
-            e.preventDefault(); // Prevent form submission for this example
-            // Example of redeeming code and adding in-game currency
-            // This can be replaced with your actual logic for redeeming codes and awarding in-game currency
-            var codeInput = document.getElementById('codeInput').value;
-            if (codeInput === "EXAMPLECODE123") { // Example code, replace with your own codes
-                alert("Code redeemed successfully! You earned 100 in-game currency."); // Example alert, replace with your own notification
-                // Add logic to award in-game currency here
-            } else {
-                alert("Invalid code. Please try again."); // Example alert for invalid code
+            if (existingEmails.includes(email)) {
+                alert("Email already in use.");
+                return;
             }
+
+            // Example: Save user data (you can replace this with backend logic)
+            localStorage.setItem('username', username);
+            localStorage.setItem('email', email);
+            localStorage.setItem('password', password);
+            localStorage.setItem('loggedIn', true);
+
+            // Example: Redirect to main page
+            window.location.href = 'main.html';
         });
     </script>
 </body>
