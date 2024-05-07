@@ -117,12 +117,18 @@
         document.querySelector('.redeem-code-form').addEventListener('submit', function(e) {
             e.preventDefault(); // Prevent form submission for this example
             var codeInput = document.getElementById('codeInput').value;
-            // Example logic to redeem code
-            if (codeInput === "EXAMPLECODE123") { // Example code, replace with your own codes
-                alert("Code redeemed successfully! You earned in-game currency."); // Example alert, replace with your own notification
-                // Add logic to award in-game currency here
+            var codes = {
+                "EXAMPLECODE123": 100, // Example code and CueBucks amount
+                "ANOTHERCODE456": 200 // Another example code and CueBucks amount
+                // Add more codes here
+            };
+            if (codes.hasOwnProperty(codeInput)) {
+                var cueBucks = parseInt(document.getElementById('cueBucks').textContent);
+                cueBucks += codes[codeInput];
+                document.getElementById('cueBucks').textContent = cueBucks;
+                alert("Code redeemed successfully! You earned " + codes[codeInput] + " CueBucks.");
             } else {
-                alert("Invalid code. Please try again."); // Example alert for invalid code
+                alert("Invalid code. Please try again.");
             }
         });
 
@@ -136,9 +142,6 @@
                 // Add logic to process the purchase here
             } else {
                 alert("Not enough CueBucks to buy this item.");
-                // Optionally, you can display a message to the user indicating they don't have enough CueBucks
-                // For example:
-                // document.querySelector('.not-enough').textContent = "Not enough CueBucks";
             }
         }
     </script>
