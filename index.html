@@ -60,6 +60,13 @@
         .item-shop.active {
             display: block; /* Show item shop when active */
         }
+        .redeem-code {
+            display: none; /* Hide redeem code section by default */
+            padding: 20px;
+        }
+        .redeem-code.active {
+            display: block; /* Show redeem code section when active */
+        }
     </style>
 </head>
 <body>
@@ -99,6 +106,13 @@
                 <button>Add to Cart</button>
             </div>
         </div>
+        <h2>Redeem Code</h2>
+        <div class="redeem-code">
+            <form id="redeemCodeForm">
+                <input type="text" id="codeInput" placeholder="Enter Code" required>
+                <button type="submit">Redeem</button>
+            </form>
+        </div>
     </div>
 
     <script>
@@ -116,6 +130,21 @@
         document.getElementById('loginForm').addEventListener('submit', function(e) {
             e.preventDefault(); // Prevent form submission for this example
             document.getElementById('loggedInIndicator').style.display = 'inline'; // Show the indicator
+        });
+
+        // JavaScript to handle code redemption
+        document.getElementById('redeemCodeForm').addEventListener('submit', function(e) {
+            e.preventDefault(); // Prevent form submission for this example
+
+            // Example of redeeming code and adding in-game currency
+            // This can be replaced with your actual logic for redeeming codes and awarding in-game currency
+            var codeInput = document.getElementById('codeInput').value;
+            if (codeInput === "EXAMPLECODE123") { // Example code, replace with your own codes
+                alert("Code redeemed successfully! You earned 100 in-game currency."); // Example alert, replace with your own notification
+                // Add logic to award in-game currency here
+            } else {
+                alert("Invalid code. Please try again."); // Example alert for invalid code
+            }
         });
     </script>
 </body>
