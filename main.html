@@ -113,20 +113,28 @@
             window.location.href = 'login.html';
         }
         
+        // Codes object with codes and corresponding CueBucks amounts
+        var codes = {
+            "EXAMPLECODE123": 100, // Example code and CueBucks amount
+            "ANOTHERCODE456": 200 // Another example code and CueBucks amount
+            // Add more codes here
+        };
+
         // Example of redeeming code
         document.querySelector('.redeem-code-form').addEventListener('submit', function(e) {
             e.preventDefault(); // Prevent form submission for this example
             var codeInput = document.getElementById('codeInput').value;
-            var codes = {
-                "EXAMPLECODE123": 100, // Example code and CueBucks amount
-                "ANOTHERCODE456": 200 // Another example code and CueBucks amount
-                // Add more codes here
-            };
             if (codes.hasOwnProperty(codeInput)) {
                 var cueBucks = parseInt(document.getElementById('cueBucks').textContent);
                 cueBucks += codes[codeInput];
                 document.getElementById('cueBucks').textContent = cueBucks;
                 alert("Code redeemed successfully! You earned " + codes[codeInput] + " CueBucks.");
+
+                // Remove the redeemed code from the codes object
+                delete codes[codeInput];
+
+                // Clear the input field
+                document.getElementById('codeInput').value = "";
             } else {
                 alert("Invalid code. Please try again.");
             }
