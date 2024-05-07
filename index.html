@@ -54,7 +54,6 @@
             background-color: #555;
         }
         .item-shop {
-            display: none; /* Hide item shop by default */
             padding: 20px;
         }
         .item-shop.active {
@@ -86,25 +85,12 @@
         <form id="loginForm" style="display: none;"> <!-- Hide login form by default -->
             <input type="text" placeholder="Username" required>
             <input type="password" placeholder="Password" required>
+            <div id="loginError" style="color: red; display: none;">Invalid Username Or Password. Please Try Again.</div>
             <button type="submit">Login</button>
         </form>
         <h2>Item Shop</h2>
         <div class="item-shop">
-            <div class="item">
-                <h3>Item 1</h3>
-                <p>Description of Item 1</p>
-                <button>Add to Cart</button>
-            </div>
-            <div class="item">
-                <h3>Item 2</h3>
-                <p>Description of Item 2</p>
-                <button>Add to Cart</button>
-            </div>
-            <div class="item">
-                <h3>Item 3</h3>
-                <p>Description of Item 3</p>
-                <button>Add to Cart</button>
-            </div>
+            <button id="redeemCodeBtn">Redeem Code</button>
         </div>
         <h2>Redeem Code</h2>
         <div class="redeem-code">
@@ -129,13 +115,25 @@
         // For simplicity, I'm just showing the indicator immediately after clicking "Login"
         document.getElementById('loginForm').addEventListener('submit', function(e) {
             e.preventDefault(); // Prevent form submission for this example
-            document.getElementById('loggedInIndicator').style.display = 'inline'; // Show the indicator
+            // Example login logic
+            var username = document.getElementById('loginForm').elements["username"].value;
+            var password = document.getElementById('loginForm').elements["password"].value;
+            // For simplicity, let's say the correct credentials are "username" and "password"
+            if (username === "username" && password === "password") {
+                document.getElementById('loggedInIndicator').style.display = 'inline'; // Show the indicator
+                document.getElementById('loginError').style.display = 'none'; // Hide the login error message
+            } else {
+                document.getElementById('loginError').style.display = 'block'; // Show the login error message
+            }
         });
 
         // JavaScript to handle code redemption
+        document.getElementById('redeemCodeBtn').addEventListener('click', function() {
+            document.querySelector('.redeem-code').classList.add('active'); // Show redeem code section
+        });
+
         document.getElementById('redeemCodeForm').addEventListener('submit', function(e) {
             e.preventDefault(); // Prevent form submission for this example
-
             // Example of redeeming code and adding in-game currency
             // This can be replaced with your actual logic for redeeming codes and awarding in-game currency
             var codeInput = document.getElementById('codeInput').value;
